@@ -3,6 +3,7 @@ package com.me.mygdxgame;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import java.lang.Math;
+import java.util.ArrayList;
 
 import javax.vecmath.Point2d;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -12,13 +13,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.*;
 public class TerrainMaker {
 	private ShapeRenderer shapeRenderer;
 	private Camera myCamera;
+	private ArrayList<Point2d> terrain = new ArrayList<Point2d>();
 	
 	public TerrainMaker(Camera camera) {
 		myCamera = camera;
 	}
 	// this is the core function: drawHills
     // arguments: the number of hills to generate, and the horizontal step, in pixels, between two hill points
-    void drawHills(int numberOfHills, int pixelStep){
+    void generateTerrain(int numberOfHills, int pixelStep){
     	ShapeRenderer shapeRenderer = new ShapeRenderer();
     	shapeRenderer.setProjectionMatrix(myCamera.combined);
         // setting a starting y coordinate, around the vertical center of the stage
@@ -41,7 +43,8 @@ public class TerrainMaker {
             // looping through hill slices
             for (int j = 0; j<=hillSlices; j++) {
                     // defining the point of the hill
-                    Point2d hillPoint =new Point2d((j*pixelStep+hillWidth*i)/640f,(hillStartY+randomHeight*Math.cos(2*Math.PI/hillSlices*j))/640f);
+                   	Point2d hillPoint =new Point2d((j*pixelStep+hillWidth*i)/640f,(hillStartY+randomHeight*Math.cos(2*Math.PI/hillSlices*j))/640f);
+                    terrain.add(hillPoint);
                     // drawing stuff
                     if(lastHillPoint != null){
                     	shapeRenderer.begin(ShapeType.Line);
@@ -55,5 +58,6 @@ public class TerrainMaker {
             // this is also necessary to make all hills (execept the first one) begin where the previous hill ended
             hillStartY = hillStartY+randomHeight;
         }
-}}
+    }
+}
 

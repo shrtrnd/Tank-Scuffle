@@ -2,6 +2,8 @@ package com.me.mygdxgame;
 
 import java.util.ArrayList;
 
+import com.me.mygdxgame.TerrainMaker;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
@@ -20,6 +22,7 @@ public class MyGdxGame implements ApplicationListener {
 	private Sprite sprite;
 	private Texture ballTexture;
 	private Sprite ballSprite;
+	private TerrainMaker terrainMaker;
 	
 	private Texture tankTexture;
 	private Sprite tankSprite;
@@ -34,7 +37,7 @@ public class MyGdxGame implements ApplicationListener {
 	
 	
 	@Override
-	public void create() {		
+	public void create() {
 		MyGestureListener mylistener = new MyGestureListener();
 		mylistener.myGame = this;
 		Gdx.input.setInputProcessor(new GestureDetector(mylistener));
@@ -64,6 +67,7 @@ public class MyGdxGame implements ApplicationListener {
 		tankSprite.setSize(0.25f, 0.25f * sprite.getHeight() / sprite.getWidth());
 		tankSprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
 		xOriginal = -sprite.getWidth()*3/4;
+		terrainMaker = new TerrainMaker(camera);
 		
 	}
 	
@@ -93,6 +97,7 @@ public class MyGdxGame implements ApplicationListener {
 		//sprite.draw(batch);
 		manager.draw(batch);
 		tankSprite.draw(batch);
+		terrainMaker.drawHills(2, 10);
 		batch.end();
 	}
 
